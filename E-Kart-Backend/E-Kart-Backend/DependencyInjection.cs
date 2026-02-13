@@ -1,7 +1,9 @@
 ﻿using EKart.Application;
 using EKart.Core;
+using EKart.Core.JwtConfig;
 using EKart.Core.Options;
 using EKart.Infrastructure;
+using EKart.Infrastructure.JwtConfig;
 
 namespace E_Kart_Backend;
 
@@ -22,6 +24,7 @@ public static class DependencyInjection
                 AllowAnyHeader().AllowCredentials();
             });
         });
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
 
         services.Configure<JwtConfigOptions>(config.GetSection(JwtConfigOptions.SectionName));
