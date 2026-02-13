@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Kart_Backend.Controllers
@@ -12,6 +13,7 @@ namespace E_Kart_Backend.Controllers
         ];
 
         [HttpGet(Name = "GetWeatherForecast")]
+        [Authorize]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
