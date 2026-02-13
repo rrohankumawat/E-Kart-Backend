@@ -1,0 +1,6 @@
+@E_Kart_Backend_HostAddress = http://localhost:5076
+
+GET {{E_Kart_Backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="E-Kart-Backend/E-Kart-Backend.csproj" />
+  <Project Path="EKart.Application/EKart.Application.csproj" />
+  <Project Path="EKart.Core/EKart.Core.csproj" />
+  <Project Path="EKart.Infrastructure/EKart.Infrastructure.csproj" />
+</Solution>
