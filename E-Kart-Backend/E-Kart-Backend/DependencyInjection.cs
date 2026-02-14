@@ -28,7 +28,7 @@ public static class DependencyInjection
 
 
         services.Configure<JwtConfigOptions>(config.GetSection(JwtConfigOptions.SectionName));
-
+        services.Configure<ConnectionStringOptions>(config.GetSection(ConnectionStringOptions.SectionName));
 
         return services;
     }

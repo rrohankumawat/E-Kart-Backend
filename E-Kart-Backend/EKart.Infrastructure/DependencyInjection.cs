@@ -1,6 +1,9 @@
-﻿using EKart.Infrastructure.JwtConfig;
+﻿using EKart.Core.Options;
+using EKart.Infrastructure.JwtConfig;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace EKart.Infrastructure;
 
@@ -18,6 +21,9 @@ public static class DependencyInjection
 
         services.ConfigureOptions<JwtBearerOptionsSetup>();
 
+        services.AddDbContext<AppDbContext.AppDbContext>((provider,options )
+            => options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection)); 
+        
         return services;
     }
 }

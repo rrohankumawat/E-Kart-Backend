@@ -10,9 +10,6 @@ using System.Text;
 
 namespace EKart.Infrastructure.JwtConfig
 {
-    internal class JwtTokenGenerator
-    {
-    }
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
         private readonly JwtConfigOptions _options;
