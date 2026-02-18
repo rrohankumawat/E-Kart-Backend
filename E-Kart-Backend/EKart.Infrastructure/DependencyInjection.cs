@@ -24,6 +24,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext.AppDbContext>((provider,options )
             => options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection)); 
         
+        
+
         return services;
     }
 }
