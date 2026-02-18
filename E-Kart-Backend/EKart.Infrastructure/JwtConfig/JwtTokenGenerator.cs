@@ -19,7 +19,7 @@ namespace EKart.Infrastructure.JwtConfig
             _options = options.Value;
         }
 
-        public string GenerateToken(Guid userId, string email, string role)
+        public string GenerateToken(Guid userId, string email)
         {
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_options.SecretKey));
@@ -30,7 +30,7 @@ namespace EKart.Infrastructure.JwtConfig
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, email),
-            new Claim(ClaimTypes.Role, role),
+            //new Claim(ClaimTypes.Role, role),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

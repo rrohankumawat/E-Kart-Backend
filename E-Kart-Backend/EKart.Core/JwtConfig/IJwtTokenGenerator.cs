@@ -6,6 +6,6 @@ namespace EKart.Core.JwtConfig
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(Guid userId, string email, string role);
+        string GenerateToken(Guid userId, string email);
     }
 }

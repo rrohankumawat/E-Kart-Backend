@@ -16,11 +16,41 @@ namespace E_Kart_Backend.Controllers
         public async Task<IActionResult> RegisterUser([FromBody] LoginDto dto)
         {
             var result = await mediator.Send(new UserRegistrationCommand(dto));
-            if (result == "Email and password cannot be empty." || result == "Email is already registered.")
+            try
             {
-                return BadRequest(result);
+                if (result.Item1 == 1)
+                {
+                    return BadRequest(ApiResponse.Failure<string>(result.Item2));
+                }
+                else if (result.Item1 == 2)
+                {
+                    return Ok(ApiResponse.Failure<string>(result.Item2));
+                }
+                return Ok(ApiResponse.Success(result, result.Item2));
             }
-            return Ok(ApiResponse.Success(result, "User Created Successfully"));
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse.Failure<string>(result.Item2));
+            }
+        }
+
+        [HttpPost("login-user")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginDto dto)
+        {
+            var result = await mediator.Send(new UserLoginCommand(dto));
+            try
+            {
+                if (result.Item1 == 1)
+                {
+                    return BadRequest(ApiResponse.Failure<string>(result.Item2));
+                }
+                return Ok(ApiResponse.Success(result.Item2, "Login Successful!"));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, ApiResponse.Failure<string>(result.Item2));
+            }
+
         }
     }
 }
