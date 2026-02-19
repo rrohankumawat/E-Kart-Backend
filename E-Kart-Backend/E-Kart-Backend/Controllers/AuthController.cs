@@ -22,7 +22,7 @@ namespace E_Kart_Backend.Controllers
                 {
                     return BadRequest(ApiResponse.Failure<string>(result.Item2));
                 }
-                else if (result.Item1 == 2)
+                else if (result.Item1 == 2 || result.Item1 == 0)
                 {
                     return Ok(ApiResponse.Failure<string>(result.Item2));
                 }
@@ -40,7 +40,7 @@ namespace E_Kart_Backend.Controllers
             var result = await mediator.Send(new UserLoginCommand(dto));
             try
             {
-                if (result.Item1 == 1)
+                if (result.Item1 == 1 || result.Item1 == 0)
                 {
                     return BadRequest(ApiResponse.Failure<string>(result.Item2));
                 }

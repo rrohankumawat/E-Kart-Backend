@@ -14,9 +14,9 @@ public class UserRepository(AppDbContext.AppDbContext _context, IJwtTokenGenerat
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Password))
+            if (string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Password) || string.IsNullOrWhiteSpace(dto.Name))
             {
-                return new Tuple<int, string>(1, "Email and password cannot be empty.");
+                return new Tuple<int, string>(1, "Email, Name and password cannot be empty.");
             }
 
             var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
@@ -28,7 +28,8 @@ public class UserRepository(AppDbContext.AppDbContext _context, IJwtTokenGenerat
             var user = new User
             {
                 Email = dto.Email,
-                PasswordHash = PasswordHasher.HashPassword(dto.Password)
+                PasswordHash = PasswordHasher.HashPassword(dto.Password),
+                Name = dto.Name
             };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
