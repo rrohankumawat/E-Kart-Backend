@@ -42,7 +42,7 @@ namespace E_Kart_Backend.Controllers
             {
                 if (result.Item1 == 1 || result.Item1 == 0)
                 {
-                    return BadRequest(ApiResponse.Failure<string>(result.Item2));
+                    return Ok(ApiResponse.Failure<string>(result.Item2));
                 }
                 return Ok(ApiResponse.Success(result.Item2, "Login Successful!"));
             }

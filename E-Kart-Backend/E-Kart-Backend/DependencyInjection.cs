@@ -28,6 +28,7 @@ public static class DependencyInjection
         });
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
 
         services.Configure<JwtConfigOptions>(config.GetSection(JwtConfigOptions.SectionName));
         services.Configure<ConnectionStringOptions>(config.GetSection(ConnectionStringOptions.SectionName));
