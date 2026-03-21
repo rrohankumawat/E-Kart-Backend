@@ -2,13 +2,15 @@
 using EKart.Core.Entities;
 using EKart.Core.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace EKart.Infrastructure.Repositories
 {
-    public class ProductRepository(AppDbContext.AppDbContext _context)   : IProductRepository
+    public class ProductRepository(AppDbContext.AppDbContext _context, IDistributedCache _cache)   : IProductRepository
     {
         public async Task<PagedResult<Product>> GetProductsByPaginationAsync(PaginationParams pagination)
         {
@@ -32,12 +34,27 @@ namespace EKart.Infrastructure.Repositories
         }
 
         public async Task<List<Product>> GetProductsByCursorAsync(int lastId, int pagesize)
-        {
-                var data = await _context.Products
+        {           
+            var existingCashing = await _cache.GetStringAsync($"product_list_{lastId}_{pagesize}");
+
+            if (!string.IsNullOrEmpty(existingCashing))
+            {
+                return JsonSerializer.Deserialize<List<Product>>(existingCashing);
+            }
+
+            var data = await _context.Products
                 .Where(p => p.ProductId > lastId)
                 .OrderBy(p => p.ProductId)
                 .Take(pagesize)
                 .ToListAsync();
+
+            var cacheOptions = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+            };
+
+            await _cache.SetStringAsync($"product_list_{lastId}_{pagesize}", JsonSerializer.Serialize(data), cacheOptions);
+
             return data;
         }
 

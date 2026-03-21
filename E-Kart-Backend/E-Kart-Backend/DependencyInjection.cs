@@ -17,6 +17,12 @@ public static class DependencyInjection
         services.AddApplicationDI();
         services.AddInfrastructureDI();
 
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = "localhost:6379";
+            options.InstanceName = "EKartCache_";
+        });
+
         services.AddCors(options =>
         {
             options.AddPolicy("AllowWeb", policy =>

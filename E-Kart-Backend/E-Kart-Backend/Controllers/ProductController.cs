@@ -34,13 +34,12 @@ namespace E_Kart_Backend.Controllers
         [HttpPost("pagination-by-cursor")]
         public async Task<IActionResult> PaginationByCursor(int lastId, int pagesize)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
+            Stopwatch sw = Stopwatch.StartNew();
             var result = await mediator.Send(new GetProductByCursorQuery(lastId, pagesize));
-                stopwatch.Stop();
+            sw.Stop();
             try
             {
-                return Ok(new { Time=  stopwatch.ElapsedMilliseconds, Result = result});
+                return Ok(new {TimeDuration = sw.ElapsedMilliseconds,Result = result});
             }
             catch (Exception ex)
             {
